@@ -43,7 +43,7 @@ function App() {
   const [response, setResponse] = useState<Response>();
   const [error, setError] = useState<any>();
   const [progress, setProgress] = useState<number>(0)
-  
+  const [delay, setDelay] = useState<number>(100)
 
   useInterval(async() => {
     if(progress < 100){
@@ -51,11 +51,12 @@ function App() {
         const responseObj: any = await GetServiceState();
         setResponse(responseObj);
         setProgress(progress + 1);
+        console.log(response)
       } catch (error) {
         setError(error)
       }
     }
-  }, 10)
+  }, progress <= 100 ? delay : null)
 
   return (
     <ThemeProvider theme={theme}>
