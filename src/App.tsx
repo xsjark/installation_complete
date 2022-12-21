@@ -48,7 +48,7 @@ function App() {
   useInterval(async() => {
     if(progress < 100){
       try {
-        const responseObj: any = await GetServiceState(true);
+        const responseObj: any = await GetServiceState();
         setResponse(responseObj);
         setProgress(progress + 1);
         console.log(response)
@@ -56,7 +56,7 @@ function App() {
         setError(error)
       }
     }
-  }, (progress <= 100 || !error) ? delay : null)
+  }, (response?.state === "INITIALIZED" || error) ? null : delay)
 
   return (
     <ThemeProvider theme={theme}>
@@ -73,10 +73,10 @@ function App() {
           <Card sx={{px: 5, py: 1, borderRadius: 10, border: "1px solid #497458", minHeight: "90vh"}} elevation={10}>
             <CardContent >
               <Logo />
-              {(progress === 100 && !error) && <OpenApp />}
-              {(progress < 100 && !error) && <Message message={response?.info_message} state={response?.state}/>}
+              {(response?.state === "INITIALIZED" && !error) && <OpenApp />}
+              {(response?.state !== "INITIALIZED" && !error) && <Message message={response?.info_message} state={response?.state}/>}
               {error && <Error code={error.error?.code} text={error.error?.message} />}
-              {progress < 100 && <Bar progress={progress} color={error ? "error" : "primary"} />}
+              {response?.state !== "INITIALIZED" && <Bar progress={response?.progress} color={error ? "error" : "primary"} />}
               {error && <Support />}
             </CardContent>
           </Card>

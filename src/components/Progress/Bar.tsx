@@ -1,7 +1,7 @@
 import { Box, LinearProgress, Typography } from "@mui/material";
 
 interface BarProps {
-    progress: number,
+    progress: number | undefined,
     color: "inherit" | "primary" | "secondary" | "error" | "info" | "success" | "warning" | undefined
 }
 
