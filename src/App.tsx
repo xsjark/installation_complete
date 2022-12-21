@@ -75,9 +75,9 @@ function App() {
               <Logo />
               {(response?.state === "INITIALIZED" && !error) && <OpenApp />}
               {(response?.state !== "INITIALIZED" && !error) && <Message message={response?.info_message} state={response?.state}/>}
-              {error && <Error code={error.error?.code} text={error.error?.message} />}
+              {error && <Error code={error.error?.code} message={error.error?.message} />}
               {response?.state !== "INITIALIZED" && <Bar progress={response?.progress} color={error ? "error" : "primary"} />}
-              {error && <Support error={error.error?.code}/>}
+              {error && <Support error={error.error?.code} message={error.error?.message} />}
             </CardContent>
           </Card>
         </Grid>

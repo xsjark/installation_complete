@@ -1,11 +1,12 @@
 import { Box, Link, Typography } from "@mui/material";
 
 interface SupportProps {
-    error: number
+    error: number,
+    message: string
 }
 
-export default function Support({error}: SupportProps) {
-    const message = `Hola, tengo el error #${error} con la instalacion de RunFood Service`
+export default function Support({error, message}: SupportProps) {
+    const messageString = `Hola, tengo el error #${error}: "${message}" con la instalacion de RunFood Service`
     return (
         <Box sx={{ py: 1 }}>
             <Typography variant="subtitle2">
@@ -13,7 +14,7 @@ export default function Support({error}: SupportProps) {
             </Typography>
 
             <Typography variant="subtitle2">
-                Escribenos por Whatsapp (<Link href={`https://web.whatsapp.com/send?phone=59324016128&text=${message}&app_absent=0`} target="_blank" >+593 2 401 6128</Link>)
+                Escribenos por Whatsapp (<Link href={`https://web.whatsapp.com/send?phone=59324016128&text=${messageString}&app_absent=0`} target="_blank" >+593 2 401 6128</Link>)
             </Typography>
 
             <Typography variant="subtitle2">
