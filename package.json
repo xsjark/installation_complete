@@ -1,5 +1,10 @@
 {
-  "name": "installation_complete",
+  "name": "runfood-service-web-ui",
+  "author": {
+    "name": "RunFood App",
+    "email": "desarrollo@runfoodapp.com",
+    "url": "https://runfoodapp.com"
+  },
   "version": "0.1.0",
   "private": true,
   "dependencies": {
