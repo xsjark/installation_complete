@@ -1,8 +1,8 @@
 import { Box, Typography } from "@mui/material";
 
 interface MessageProps {
-    message: string;
-    state: string;
+    message: string | undefined;
+    state: string | undefined;
 }
 
 export default function Message({message, state}: MessageProps) {

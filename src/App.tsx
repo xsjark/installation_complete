@@ -1,5 +1,5 @@
 import { Card, CardContent, createTheme, Grid, ThemeProvider } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Logo from './components/Logo/Logo';
 import Bar from './components/Progress/Bar';
 import { CssBaseline } from '@mui/material/';
@@ -33,13 +33,13 @@ interface Response {
   running: boolean,
   info_message: string,
   progress?: number,
-  creation_attempt_timestamp: any,
-  update_attempt_timestamp: any,
+  creation_attempt_timestamp: string,
+  update_attempt_timestamp: string,
   state: "CHECKING" | "UPDATING" | "ERROR" | "INITIALIZED"
 }
 function App() {
 
-  const [response, setResponse] = useState<any>();
+  const [response, setResponse] = useState<Response>();
   const [error, setError] = useState<any>();
   const [progress, setProgress] = useState<number>(0)
   
@@ -54,7 +54,6 @@ function App() {
       } catch (error) {
         setError(error)
       }
-      
     }
   }, 10)
 
