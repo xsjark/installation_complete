@@ -6,6 +6,7 @@ import { CssBaseline } from '@mui/material/';
 import OpenApp from './components/OpenApp/OpenApp';
 import Error from './components/Error/Error';
 import Message from './components/Progress/Message';
+import Support from './components/Error/Support';
 
 
 const theme = createTheme({
@@ -35,7 +36,7 @@ function App() {
   }, [])
 
   const getApi = async () => {
-    fetch("https://dummyjson.com/products")
+    fetch("https://dummyjson.com/profducts")
       .then((res) => {
         if (res.ok) return res.json();
         else {
@@ -74,13 +75,14 @@ function App() {
       >
 
         <Grid item xs={12} md={6}>
-          <Card sx={{p: 5}}>
+          <Card sx={{px: 5, py: 1}}>
             <CardContent >
               <Logo />
               {(progress === 100 && !errorText) && <OpenApp />}
               {(progress < 100 && !errorText) && <Message />}
               {errorText && <Error code={errorCode} text={errorText} />}
               <Bar progress={progress} color={errorText ? "error" : "primary"} />
+              {errorText && <Support />}
             </CardContent>
           </Card>
         </Grid>
