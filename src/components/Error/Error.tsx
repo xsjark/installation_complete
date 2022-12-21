@@ -1,4 +1,4 @@
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 interface ErrorProps {
     code: number | undefined,
@@ -7,6 +7,8 @@ interface ErrorProps {
 
 export default function Error({code, text}: ErrorProps) {
     return (
-        <Typography align="center">{text} Código: {code}</Typography>
+        <Box sx={{py: 1}}>
+            <Typography variant="h6" align="center">{text} Código: {code}</Typography>
+        </Box>
     )
 }

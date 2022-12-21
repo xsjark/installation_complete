@@ -1,10 +1,11 @@
-import { Card, CardContent, Container, createTheme, Grid, ThemeProvider, Typography } from '@mui/material';
+import { Card, CardContent, createTheme, Grid, ThemeProvider } from '@mui/material';
 import { useEffect, useState } from 'react';
 import Logo from './components/Logo/Logo';
 import Bar from './components/Progress/Bar';
 import { CssBaseline } from '@mui/material/';
 import OpenApp from './components/OpenApp/OpenApp';
 import Error from './components/Error/Error';
+import Message from './components/Progress/Message';
 
 
 const theme = createTheme({
@@ -34,7 +35,7 @@ function App() {
   }, [])
 
   const getApi = async () => {
-    fetch("https://dummyjson.com/praoducts")
+    fetch("https://dummyjson.com/products")
       .then((res) => {
         if (res.ok) return res.json();
         else {
@@ -77,7 +78,7 @@ function App() {
             <CardContent >
               <Logo />
               {(progress === 100 && !errorText) && <OpenApp />}
-              {(progress < 100 && !errorText) && <Typography>Configurando RunFood...</Typography>}
+              {(progress < 100 && !errorText) && <Message />}
               {errorText && <Error code={errorCode} text={errorText} />}
               <Bar progress={progress} color={errorText ? "error" : "primary"} />
             </CardContent>
