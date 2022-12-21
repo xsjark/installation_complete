@@ -7,6 +7,8 @@ import OpenApp from './components/OpenApp/OpenApp';
 import Error from './components/Error/Error';
 import Message from './components/Progress/Message';
 import Support from './components/Error/Support';
+import getprogress from './mock_api';
+import useInterval from './Hooks/useInterval';
 
 
 const theme = createTheme({
@@ -29,14 +31,10 @@ function App() {
   const [errorText, setErrorText] = useState<string>();
   const [errorCode, setErrorCode] = useState<number>();
   const [progress, setProgress] = useState<number>(0)
-    ;
-  useEffect(() => {
-    countDown();
-    getApi();
-  }, [])
+  
 
-  const getApi = async () => {
-    fetch("https://dummyjson.com/profducts")
+  const getApi = async (id: number) => {
+    fetch(`https://dummyjson.com/products/${id}`)
       .then((res) => {
         if (res.ok) return res.json();
         else {
@@ -44,23 +42,21 @@ function App() {
           setErrorCode(res.status)
         };
       })
-      .then(data => setItems(data))
+      .then(data => {
+        setItems(data)
+        console.log(data)
+      })
       .catch(err => console.log(err))
   }
 
-  const countDown = () => {
-    const timer = setInterval(() => {
-      setProgress((oldProgress: number) => {
-        const diff = Math.random() * 10;
-        return Math.round(Math.min(oldProgress + diff, 100));
-      });
-    }, 500);
-
-    return () => {
-      clearInterval(timer);
-    };
-  }
-
+  useInterval(async() => {
+    if(progress < 100){
+      // console.log(await getprogress(progress))
+      getApi(progress)
+      setProgress(progress + 1);
+      
+    }
+    }, 100)
 
   return (
     <ThemeProvider theme={theme}>
@@ -78,6 +74,7 @@ function App() {
           <Card sx={{px: 5, py: 1}}>
             <CardContent >
               <Logo />
+              {/* {JSON.stringify(items)} */}
               {(progress === 100 && !errorText) && <OpenApp />}
               {(progress < 100 && !errorText) && <Message />}
               {errorText && <Error code={errorCode} text={errorText} />}
