@@ -25,7 +25,7 @@ export default function GetServiceState(triggererror?: boolean) {
         }, 400);
     }
 
-    return new Promise((res, rej) => {
+    return new Promise<any>((res, rej) => {
         setTimeout(() => {
             if (triggererror) {
                 rej({

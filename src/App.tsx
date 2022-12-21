@@ -32,9 +32,9 @@ interface Response {
   error: Error | null,
   running: boolean,
   info_message: string,
-  progress?: number,
-  creation_attempt_timestamp: string,
-  update_attempt_timestamp: string,
+  progress: number,
+  creation_attempt_timestamp: string | undefined,
+  update_attempt_timestamp: string | undefined,
   state: "CHECKING" | "UPDATING" | "ERROR" | "INITIALIZED"
 }
 
@@ -48,7 +48,7 @@ function App() {
   useInterval(async() => {
     if(progress < 100){
       try {
-        const responseObj: any = await GetServiceState(true);
+        const responseObj: Response = await GetServiceState();
         setResponse(responseObj);
         setProgress(progress + 1);
         console.log(response)
