@@ -47,7 +47,7 @@ function App() {
   useInterval(async() => {
     if(progress < 100){
       try {
-        const responseObj: any = await GetServiceState(true);
+        const responseObj: any = await GetServiceState();
         setResponse(responseObj);
         console.log(response);
         setProgress(progress + 1);
