@@ -76,7 +76,7 @@ function App() {
               {(progress === 100 && !error) && <OpenApp />}
               {(progress < 100 && !error) && <Message message={response?.info_message} state={response?.state}/>}
               {error && <Error code={error.error?.code} text={error.error?.message} />}
-              <Bar progress={progress} color={error ? "error" : "primary"} />
+              {progress < 100 && <Bar progress={progress} color={error ? "error" : "primary"} />}
               {error && <Support />}
             </CardContent>
           </Card>
