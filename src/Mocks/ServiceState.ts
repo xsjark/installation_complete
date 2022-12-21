@@ -37,8 +37,8 @@ export default function GetServiceState(triggererror?: boolean) {
                     running: false,
                     info_message: "Cannot Load data",
                     progress,
-                    creation_attempt_timpestamp: new Date().toJSON(),
-                    update_attempt_timpestamp: new Date().toJSON(),
+                    creation_attempt_timestamp: new Date().toJSON(),
+                    update_attempt_timestamp: new Date().toJSON(),
                     state: "ERROR"
                 })
             }

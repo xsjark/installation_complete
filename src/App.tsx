@@ -7,60 +7,56 @@ import OpenApp from './components/OpenApp/OpenApp';
 import Error from './components/Error/Error';
 import Message from './components/Progress/Message';
 import Support from './components/Error/Support';
-
+import useInterval from './Hooks/useInterval';
+import GetServiceState from './Mocks/ServiceState';
 
 const theme = createTheme({
   palette: {
     background: {
-      default: "#0C431F"
+      default: "#0c7e35"
     },
     primary: {
-      main: "#0C431F"
+      main: "#0c7e35"
     }
   },
-  typography: {
-    fontFamily: "Poppins"
-  }
+  components: {
+    MuiTypography: {
+      defaultProps: {
+        fontFamily: "Poppins",
+      },
+    },
+  },
 })
 
+interface Response {
+  error: Error | null,
+  running: boolean,
+  info_message: string,
+  progress?: number,
+  creation_attempt_timestamp: any,
+  update_attempt_timestamp: any,
+  state: "CHECKING" | "UPDATING" | "ERROR" | "INITIALIZED"
+}
 function App() {
 
-  const [items, setItems] = useState<any>();
-  const [errorText, setErrorText] = useState<string>();
-  const [errorCode, setErrorCode] = useState<number>();
+  const [response, setResponse] = useState<any>();
+  const [error, setError] = useState<any>();
   const [progress, setProgress] = useState<number>(0)
-    ;
-  useEffect(() => {
-    countDown();
-    getApi();
-  }, [])
+  
 
-  const getApi = async () => {
-    fetch("https://dummyjson.com/profducts")
-      .then((res) => {
-        if (res.ok) return res.json();
-        else {
-          setErrorText(res.statusText);
-          setErrorCode(res.status)
-        };
-      })
-      .then(data => setItems(data))
-      .catch(err => console.log(err))
-  }
-
-  const countDown = () => {
-    const timer = setInterval(() => {
-      setProgress((oldProgress: number) => {
-        const diff = Math.random() * 10;
-        return Math.round(Math.min(oldProgress + diff, 100));
-      });
-    }, 500);
-
-    return () => {
-      clearInterval(timer);
-    };
-  }
-
+  useInterval(async() => {
+    if(progress < 100){
+      try {
+        const responseObj: any = await GetServiceState(true);
+        setResponse(responseObj);
+        console.log(response);
+        setProgress(progress + 1);
+      } catch (error) {
+        setError(error)
+      }
+      
+    }
+  }, 10)
 
   return (
     <ThemeProvider theme={theme}>
@@ -74,15 +70,15 @@ function App() {
         sx={{ minHeight: "100vh"}}
       >
 
-        <Grid item xs={12} md={6}>
-          <Card sx={{px: 5, py: 1}}>
+        <Grid item xs={12} md={8}>
+          <Card sx={{px: 5, py: 1, borderRadius: 10, border: "1px solid #497458"}} elevation={10}>
             <CardContent >
               <Logo />
-              {(progress === 100 && !errorText) && <OpenApp />}
-              {(progress < 100 && !errorText) && <Message />}
-              {errorText && <Error code={errorCode} text={errorText} />}
-              <Bar progress={progress} color={errorText ? "error" : "primary"} />
-              {errorText && <Support />}
+              {(progress === 100 && !error) && <OpenApp />}
+              {(progress < 100 && !error) && <Message message={response?.info_message} state={response?.state}/>}
+              {error && <Error code={error.error?.code} text={error.error?.message} />}
+              <Bar progress={progress} color={error ? "error" : "primary"} />
+              {error && <Support />}
             </CardContent>
           </Card>
         </Grid>

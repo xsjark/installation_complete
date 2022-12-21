@@ -8,7 +8,7 @@ interface ErrorProps {
 export default function Error({code, text}: ErrorProps) {
     return (
         <Box sx={{py: 1}}>
-            <Typography variant="h6" align="center">{text} Código: {code}</Typography>
+            <Typography align="center">{text} Código: {code}</Typography>
         </Box>
     )
 }
