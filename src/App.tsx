@@ -48,7 +48,7 @@ function App() {
   useInterval(async() => {
     if(progress < 100){
       try {
-        const responseObj: any = await GetServiceState();
+        const responseObj: any = await GetServiceState(true);
         setResponse(responseObj);
         setProgress(progress + 1);
         console.log(response)
@@ -69,15 +69,15 @@ function App() {
         sx={{ minHeight: "100vh"}}
       >
 
-        <Grid item xs={12} md={8}>
-          <Card sx={{px: 5, py: 1, borderRadius: 10, border: "1px solid #497458", minHeight: "90vh"}} elevation={10}>
-            <CardContent >
+        <Grid item xs={12} sm={10} md={8} lg={6}>
+          <Card sx={{px: 5, py: 1, borderRadius: 10, border: "1px solid #497458", minHeight: "80vh", width: "100%", display: "flex", justifyContent: "center", alignItems: "center"}}  elevation={10}>
+            <CardContent sx={{width: "100%"}} >
               <Logo />
               {(response?.state === "INITIALIZED" && !error) && <OpenApp />}
               {(response?.state !== "INITIALIZED" && !error) && <Message message={response?.info_message} state={response?.state}/>}
               {error && <Error code={error.error?.code} text={error.error?.message} />}
               {response?.state !== "INITIALIZED" && <Bar progress={response?.progress} color={error ? "error" : "primary"} />}
-              {error && <Support />}
+              {error && <Support error={error.error?.code}/>}
             </CardContent>
           </Card>
         </Grid>
