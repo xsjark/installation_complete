@@ -70,7 +70,7 @@ function App() {
       >
 
         <Grid item xs={12} md={8}>
-          <Card sx={{px: 5, py: 1, borderRadius: 10, border: "1px solid #497458"}} elevation={10}>
+          <Card sx={{px: 5, py: 1, borderRadius: 10, border: "1px solid #497458", minHeight: "90vh"}} elevation={10}>
             <CardContent >
               <Logo />
               {(progress === 100 && !error) && <OpenApp />}
