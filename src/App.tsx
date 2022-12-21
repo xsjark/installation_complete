@@ -37,6 +37,7 @@ interface Response {
   update_attempt_timestamp: string,
   state: "CHECKING" | "UPDATING" | "ERROR" | "INITIALIZED"
 }
+
 function App() {
 
   const [response, setResponse] = useState<Response>();
@@ -49,7 +50,6 @@ function App() {
       try {
         const responseObj: any = await GetServiceState();
         setResponse(responseObj);
-        console.log(response);
         setProgress(progress + 1);
       } catch (error) {
         setError(error)
@@ -63,7 +63,6 @@ function App() {
       <Grid
         container
         spacing={0}
-        // direction="column"
         alignItems="center"
         justifyContent="center"
         sx={{ minHeight: "100vh"}}
