@@ -28,7 +28,7 @@ const theme = createTheme({
   },
 })
 
-interface Response {
+interface ServiceStateResponse {
   error: Error | null,
   running: boolean,
   info_message: string,
@@ -40,7 +40,7 @@ interface Response {
 
 function App() {
 
-  const [response, setResponse] = useState<Response>();
+  const [response, setResponse] = useState<ServiceStateResponse>();
   const [error, setError] = useState<any>();
   const [progress, setProgress] = useState<number>(0)
   const [delay, setDelay] = useState<number>(100)
@@ -48,7 +48,7 @@ function App() {
   useInterval(async() => {
     if(progress < 100){
       try {
-        const responseObj: Response = await GetServiceState();
+        const responseObj: ServiceStateResponse = await GetServiceState();
         setResponse(responseObj);
         setProgress(progress + 1);
         console.log(response)
